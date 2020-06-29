@@ -3,10 +3,7 @@ use std::cmp::Ordering;
 use std::io;
 
 fn main() {
-    let mut answer: [u32; 4] = [0, 0, 0, 0];
-    for x in 0..4 {
-        answer[x] = gen(answer);
-    }
+    let answer = gen_answer();
     let mut tries: i32 = 0;
 
     println!("-----------------------------------------------------------------------");
@@ -21,8 +18,8 @@ B means: n digits match but are not at the correct position.
 For example, with an answer of 7130, a guess of 3610 will receive 1A2B.
 1*A for the 0, rightly in the 4th position; 2*B are 1 and 3.");
     println!("-----------------------------------------------------------------------");
-    // println!("The answer is {}{}{}{}.", answer[0], answer[1], answer[2], answer[3]);
-    // println!("-----------------------------------------------------------------------");
+    println!("The answer is {}{}{}{}.", answer[0], answer[1], answer[2], answer[3]);
+    println!("-----------------------------------------------------------------------");
 
     loop {
         println!("> ({}) Guess a 4-digit number:", tries);
@@ -62,7 +59,7 @@ For example, with an answer of 7130, a guess of 3610 will receive 1A2B.
                     noun = "try";
                 }
                 if result == "4A0B" {
-                    println!("You got it in {} {}! 👾 The answer is {}!", tries, noun, guess);
+                    println!("The answer is {}! You got it in {} {}. 👾", guess, tries, noun);
                     break;
                 } else {
                     println!("{}", result);
@@ -72,7 +69,15 @@ For example, with an answer of 7130, a guess of 3610 will receive 1A2B.
     }
 }
 
-fn gen(answer: [u32; 4]) -> u32 {
+fn gen_answer() -> Vec<u32> {
+    let mut answer = Vec::new();
+    for _ in 0..4 {
+        answer.push(gen(&answer));
+    }
+    answer
+}
+
+fn gen(answer: &Vec<u32>) -> u32 {
     loop {
         let number: u32 = rand::thread_rng().gen_range(0, 10);
         if !answer.contains(&number) {
@@ -81,7 +86,7 @@ fn gen(answer: [u32; 4]) -> u32 {
     }
 }
 
-fn check_answer(answer: &[u32; 4], guess: &String) -> String {
+fn check_answer(answer: &Vec<u32>, guess: &String) -> String {
     let mut perfect_match: u32 = 0;
     let mut number_match: u32 = 0;
     let mut i: usize = 0;
