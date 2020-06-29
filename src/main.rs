@@ -18,8 +18,8 @@ B means: n digits match but are not at the correct position.
 For example, with an answer of 7130, a guess of 3610 will receive 1A2B.
 1*A for the 0, rightly in the 4th position; 2*B are 1 and 3.");
     println!("-----------------------------------------------------------------------");
-    println!("The answer is {}{}{}{}.", answer[0], answer[1], answer[2], answer[3]);
-    println!("-----------------------------------------------------------------------");
+    // println!("The answer is {}{}{}{}.", answer[0], answer[1], answer[2], answer[3]);
+    // println!("-----------------------------------------------------------------------");
 
     loop {
         println!("> ({}) Guess a 4-digit number:", tries);
