@@ -10,13 +10,13 @@ fn main() {
     let mut tries: i32 = 0;
 
     println!("----------------------------------------------------------------");
-    println!("  Guess a 4 digit number. All four digits will be different.");
+    println!("  Guess a 4-digit number. All four digits will be different.");
     // println!("  The answer is {}{}{}{}.", answer[0], answer[1], answer[2], answer[3]);
     println!("----------------------------------------------------------------");
 
     loop {
         tries = tries + 1;
-        println!("> ({}) Enter a 4 digit number:", tries);
+        println!("> ({}) Enter a 4-digit number:", tries);
         let mut guess = String::new();
 
         io::stdin()
