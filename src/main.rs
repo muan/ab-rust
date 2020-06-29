@@ -10,7 +10,7 @@ fn main() {
     println!("Guess a 4-digit number with the least number of attempts possible!
 All four digits will be different.
 
-With eeach guess, you will get a hint in the form of As and Bs.
+With each guess, you will get a hint in the form of As and Bs.
 
 A means: n digits match perfectly.
 B means: n digits match but are not at the correct position.
