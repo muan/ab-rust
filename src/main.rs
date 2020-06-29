@@ -21,8 +21,9 @@ For example, with an answer of 7130, a guess of 3610 will receive 1A2B.
     // println!("The answer is {}{}{}{}.", answer[0], answer[1], answer[2], answer[3]);
     // println!("-----------------------------------------------------------------------");
 
+    let mut prompt = "Guess a 4-digit number".to_string();
     loop {
-        println!("> ({}) Guess a 4-digit number:", tries);
+        println!("> ({}) {}:", tries, prompt);
         let mut guess = String::new();
 
         io::stdin()
@@ -62,7 +63,7 @@ For example, with an answer of 7130, a guess of 3610 will receive 1A2B.
                     println!("The answer is {}! You got it in {} {}. 👾", guess, tries, noun);
                     break;
                 } else {
-                    println!("{}", result);
+                    prompt = format!("Got {}, guess again", result);
                 }
             }
         }
