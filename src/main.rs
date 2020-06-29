@@ -25,8 +25,7 @@ For example, with an answer of 7130, a guess of 3610 will receive 1A2B.
     // println!("-----------------------------------------------------------------------");
 
     loop {
-        tries = tries + 1;
-        println!("> ({}) Enter a 4-digit number:", tries);
+        println!("> ({}) Guess a 4-digit number:", tries);
         let mut guess = String::new();
 
         io::stdin()
@@ -56,6 +55,7 @@ For example, with an answer of 7130, a guess of 3610 will receive 1A2B.
                 continue;
             },
             Ordering::Equal => {
+                tries = tries + 1;
                 let result = check_answer(&answer, &guess);
                 if result == "4A0B" {
                     println!("You got it! 👾");
