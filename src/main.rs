@@ -57,8 +57,12 @@ For example, with an answer of 7130, a guess of 3610 will receive 1A2B.
             Ordering::Equal => {
                 tries = tries + 1;
                 let result = check_answer(&answer, &guess);
+                let mut noun = "tries";
+                if tries == 1 {
+                    noun = "try";
+                }
                 if result == "4A0B" {
-                    println!("You got it! 👾");
+                    println!("You got it in {} {}! 👾 The answer is {}!", tries, noun, guess);
                     break;
                 } else {
                     println!("{}", result);
