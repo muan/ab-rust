@@ -2,6 +2,8 @@ use rand::Rng;
 use std::cmp::Ordering;
 use std::io;
 
+type Answer = [u32; 4];
+
 fn main() {
     let answer = gen_answer();
     let mut tries: i32 = 0;
@@ -70,15 +72,15 @@ For example, with an answer of 7130, a guess of 3610 will receive 1A2B.
     }
 }
 
-fn gen_answer() -> Vec<u32> {
-    let mut answer = Vec::new();
-    for _ in 0..4 {
-        answer.push(gen(&answer));
+fn gen_answer() -> Answer {
+    let mut answer = [0; 4];
+    for i in 0..4 {
+        answer[i] = gen(&answer);
     }
     answer
 }
 
-fn gen(answer: &Vec<u32>) -> u32 {
+fn gen(answer: &Answer) -> u32 {
     loop {
         let number: u32 = rand::thread_rng().gen_range(0, 10);
         if !answer.contains(&number) {
@@ -87,7 +89,7 @@ fn gen(answer: &Vec<u32>) -> u32 {
     }
 }
 
-fn check_answer(answer: &Vec<u32>, guess: &String) -> String {
+fn check_answer(answer: &Answer, guess: &String) -> String {
     let mut perfect_match: u32 = 0;
     let mut number_match: u32 = 0;
     let mut i: usize = 0;
@@ -115,4 +117,44 @@ fn check_answer(answer: &Vec<u32>, guess: &String) -> String {
     }
 
     return format!("{}A{}B", perfect_match, number_match);
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_gen_anser() {
+        let answer = gen_answer();
+
+        assert_eq!(answer.len(), 4);
+        for a in answer.iter() {
+            assert!(*a < 10);
+        }
+    }
+
+    #[test]
+    fn test_check_answer() {
+        let answer = [1, 2, 3, 4];
+
+        let guess = "1234";
+        let result = check_answer(&answer, &guess.to_string());
+        assert_eq!(result, "4A0B");
+
+        let guess = "0234";
+        let result = check_answer(&answer, &guess.to_string());
+        assert_eq!(result, "3A0B");
+
+        let guess = "4231";
+        let result = check_answer(&answer, &guess.to_string());
+        assert_eq!(result, "2A2B");
+
+        let guess = "4981";
+        let result = check_answer(&answer, &guess.to_string());
+        assert_eq!(result, "0A2B");
+
+        let guess = "9876";
+        let result = check_answer(&answer, &guess.to_string());
+        assert_eq!(result, "0A0B");
+    }
 }
