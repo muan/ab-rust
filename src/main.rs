@@ -1,5 +1,6 @@
 use rand::Rng;
 use std::cmp::Ordering;
+use std::collections::HashSet;
 use std::io;
 
 type Answer = [u32; 4];
@@ -73,17 +74,20 @@ For example, with an answer of 7130, a guess of 3610 will receive 1A2B.
 }
 
 fn gen_answer() -> Answer {
+    let mut already_have = HashSet::new();
     let mut answer = [0; 4];
     for i in 0..4 {
-        answer[i] = gen(&answer);
+        let digit = gen(&already_have);
+        already_have.insert(digit);
+        answer[i] = digit;
     }
     answer
 }
 
-fn gen(answer: &Answer) -> u32 {
+fn gen(excluding: &HashSet<u32>) -> u32 {
     loop {
         let number: u32 = rand::thread_rng().gen_range(0, 10);
-        if !answer.contains(&number) {
+        if !excluding.contains(&number) {
             break number;
         }
     }
